@@ -8,3 +8,6 @@ This will be a medium-level project and therefore mentees with some experience w
 I'll be equally into this project and we'll be doing it together so enthusiastic and dedicated people are all Welcome :smiley:  
 Come let's learn together.
 
+
+P.S :Download the dataset [here]https://www.kaggle.com/sunnysai12345/news-summary , then run the dataprep.py file to generate the summary.csv file as a first step!
+
