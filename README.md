@@ -9,5 +9,5 @@ I'll be equally into this project and we'll be doing it together so enthusiastic
 Come let's learn together.
 
 
-P.S :Download the dataset [here]https://www.kaggle.com/sunnysai12345/news-summary , then run the dataprep.py file to generate the summary.csv file as a first step!
+P.S :Download the dataset [here](https://www.kaggle.com/sunnysai12345/news-summary) , then run the dataprep.py file to generate the summary.csv file as a first step!
 
