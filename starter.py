@@ -84,19 +84,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 def dataset_cleaning():
     
     def text_cleaner(text):
-    newString = text.lower()
-    newString = BeautifulSoup(newString, "lxml").text
-    newString = re.sub(r'\([^)]*\)', '', newString)
-    newString = re.sub('"','', newString)
-    newString = ' '.join([contraction_mapping[t] if t in contraction_mapping else t for t in newString.split(" ")])    
-    newString = re.sub(r"'s\b","",newString)
-    newString = re.sub("[^a-zA-Z]", " ", newString) 
-    tokens = [w for w in newString.split() if not w in stop_words]
-    long_words=[]
-    for i in tokens:
-        if len(i)>=3:                  #removing short word
-            long_words.append(i)   
-    return (" ".join(long_words)).strip()
+      newString = text.lower()
+      newString = BeautifulSoup(newString, "lxml").text
+      newString = re.sub(r'\([^)]*\)', '', newString)
+      newString = re.sub('"','', newString)
+      newString = ' '.join([contraction_mapping[t] if t in contraction_mapping else t for t in newString.split(" ")])    
+      newString = re.sub(r"'s\b","",newString)
+      newString = re.sub("[^a-zA-Z]", " ", newString) 
+      tokens = [w for w in newString.split() if not w in stop_words]
+      long_words=[]
+      for i in tokens:
+          if len(i)>=3:                  #removing short word
+              long_words.append(i)   
+      return (" ".join(long_words)).strip()
 
     cleaned_text = []
     for t in df['ctext']:
