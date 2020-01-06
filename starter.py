@@ -69,38 +69,47 @@ contraction_mapping = {"ain't": "is not", "aren't": "are not","can't": "cannot",
 df=pd.read_csv("summary.csv",encoding = "ISO-8859-1")
 columns=df.columns
 
-X=df['ctext']
-y=df['text']
+
 
 
 #An example showing the data and the summary
-print("Text:",X[1])
-print("\n")
-print("Summary:",y[1])
+#print("Text:",X[1])
+#print("\n")
+#print("Summary:",y[1])
+#Text cleaning
+#Rows having duplicates will be omitted
+df.drop_duplicates(keep='first',inplace=True)
+
+#Rows not having summary or document is deleted
+df.dropna(axis=0,inplace=True)
+
+X=df['ctext']
+y=df['text']
 
 #Splitting the dataset to train set and test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 
 def dataset_cleaning():
-    
+    stop_words = set(stopwords.words('english')) 
     def text_cleaner(text):
-      newString = text.lower()
-      newString = BeautifulSoup(newString, "lxml").text
-      newString = re.sub(r'\([^)]*\)', '', newString)
-      newString = re.sub('"','', newString)
-      newString = ' '.join([contraction_mapping[t] if t in contraction_mapping else t for t in newString.split(" ")])    
-      newString = re.sub(r"'s\b","",newString)
-      newString = re.sub("[^a-zA-Z]", " ", newString) 
-      tokens = [w for w in newString.split() if not w in stop_words]
-      long_words=[]
-      for i in tokens:
-          if len(i)>=3:                  #removing short word
-              long_words.append(i)   
-      return (" ".join(long_words)).strip()
+        newString = text.lower()
+        newString = BeautifulSoup(newString, "lxml").text
+        newString = re.sub(r'\([^)]*\)', '', newString)
+        newString = re.sub('"','', newString)
+        newString = ' '.join([contraction_mapping[t] if t in contraction_mapping else t for t in newString.split(" ")])    
+        newString = re.sub(r"'s\b","",newString)
+        newString = re.sub("[^a-zA-Z]", " ", newString) 
+        tokens = [w for w in newString.split() if not w in stop_words]
+        long_words=[]
+        for i in tokens:
+            if len(i)>=3:                  #removing short word
+                long_words.append(i)   
+        return (" ".join(long_words)).strip()
 
     cleaned_text = []
     for t in df['ctext']:
         cleaned_text.append(text_cleaner(t))
+    print('done')
 
     def summary_cleaner(text):
         newString = re.sub('"','', text)
@@ -119,11 +128,36 @@ def dataset_cleaning():
     cleaned_summary = []
     for t in df['text']:
         cleaned_summary.append(summary_cleaner(t))
+    
 
     df['cleaned_text']=cleaned_text
     df['cleaned_summary']=cleaned_summary
     df['cleaned_summary'].replace('', np.nan, inplace=True)
     df.dropna(axis=0,inplace=True)
+dataset_cleaning()
+def preprocessing():
+    #This function  will be used to preprocess the data to a form that can be fed into the neural network
+    #Subparts:
+    ##1.Find the most_probable_length of the sentences of text_type and summary type 
+    ##(Hint: you may plot the distribution of lengths of sentences)
+    ##2.Tokenizing the data
+    ##3.Padding the sentences to a specific length
+    ##4.Introducing embeddings( We'll be using the Fasttext embeddings)
+    pass
+
+def model():
+    #This function defines the structure  of the model , i.e the number of hidden units, no. of layers
+    #and the input and output dimensions of each layer.(We'll be using keras)
+    pass
+
+def model_accuracy():
+    #Function to check how the model works on the test data
+    pass
+
+def predict():
+    #This function will interact with the user in taking whole texts and will return it's summary as output
+    pass
+
 
 def preprocessing():
     #This function  will be used to preprocess the data to a form that can be fed into the neural network
